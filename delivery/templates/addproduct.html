@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>New Product</title>
+</head>
+<body>
+<form enctype="multipart/form-data" method="post" action="{% url 'productdata' %}">
+    {% csrf_token %}
+    <div>
+    <div class="col-12 grid-margin stretch-card">
+              <div class="card">
+                <div class="card-body">
+                  <h4 class="card-title">Add Products</h4>
+
+                  <form class="forms-sample">
+                    <div class="form-group">
+                      <label>Category_name</label>
+                      <select name="cname" class="form-control">
+                          <option>Select category</option>
+                          {% for i in cat %}
+                          <option>{{ i.CategoryName }}</option>
+                          {% endfor %}
+                      </select>
+                    </div>
+                      <div class="form-group">
+                          <label>Product Name</label>
+                          <input type="text" name="pname" placeholder="Product Name" class="form-control">
+                      </div>
+                      <div class="form-group">
+                      <label>Description</label>
+                      <textarea class="form-control"  rows="4"name="pdescp" placeholder="Description of product"></textarea>
+                    </div>
+                      <div class="form-group">
+                          <label>Price</label>
+                          <input type="text" name="price" placeholder="Price" class="form-control">
+                      </div>
+
+                    <div class="form-group">
+                      <label>Product Image</label>
+<!--                      <input type="file" name="img[]" class="file-upload-default">-->
+                      <div class="input-group col-xs-12">
+                        <input type="file" class="form-control file-upload-info" placeholder="Product Image" name="pimg">
+                      </div>
+                    </div>
+
+
+                    <button type="submit" class="btn btn-primary mr-2">Submit</button>
+                    <button class="btn btn-light">Cancel</button>
+                  </form>
+                </div>
+              </div>
+            </div>
+</div>
+
+</form>
+</body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+{% if messages %}
+{% for i in messages %}
+{% if i.tags == 'warning' %}
+<script>
+  swal('{{i}}','','warning')
+</script>
+{% elif i.tags == 'error' %}
+<script>
+  swal('{{i}}','','error')
+</script>
+{% elif i.tags == 'success' %}
+<script>
+  swal('{{i}}','','success')
+</script>
+{% else %}
+<script>
+  swal('{{i}}','','info')
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
+</html>
+{% endblock %}

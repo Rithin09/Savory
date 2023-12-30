@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+{% extends 'index.html' %}
+{% block content %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<form method="post" action="{% url 'updatecat' dataid=edit.id %}" enctype="multipart/form-data">
+    {% csrf_token %}
+    <div class="col-lg-12">
+        <div class="card">
+           <div class="card-body">
+           <div class="card-title">Add Category</div>
+           <hr>
+           <div class="form-group">
+            <label >Name</label>
+            <input type="text" class="form-control form-control-rounded"  placeholder="Category Name" name="cname" value="{{edit.CategoryName}}">
+           </div>
+          <div class="form-group">
+                      <label>Description</label>
+                      <textarea class="form-control form-control-rounded"  rows="4"name="cdescp" placeholder="Description of category">{{edit.Description}}</textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <label>Category Image</label>
+<!--                      <input type="file" name="img[]" class="file-upload-default">-->
+                      <div class="input-group col-xs-12">
+                          <img src="{{edit.Image.url}}" height="100px" width="100px">
+                        <input type="file" class="form-control file-upload-info form-control-rounded" placeholder="Category Image" name="cimg">
+                      </div>
+                    </div>
+
+            <button type="submit" class="btn btn-light btn-round px-5"><i class="icon-lock"></i>Submit</button>
+          </div>
+         </div>
+         </div>
+</form>
+</body>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+{% if messages %}
+{% for i in messages %}
+{% if i.tags == 'warning' %}
+<script>
+  swal('{{i}}','','warning')
+</script>
+{% elif i.tags == 'error' %}
+<script>
+  swal('{{i}}','','error')
+</script>
+{% elif i.tags == 'success' %}
+<script>
+  swal('{{i}}','','success')
+</script>
+{% else %}
+<script>
+  swal('{{i}}','','info')
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
+</html>
+{% endblock %}

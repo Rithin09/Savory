@@ -1,0 +1,756 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <title>CaterServ - Catering Services Website Template</title>
+    <meta content="width=device-width, initial-scale=1.0" name="viewport">
+    <meta content="" name="keywords">
+    <meta content="" name="description">
+
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Playball&display=swap"
+        rel="stylesheet">
+
+    <!-- Icon Font Stylesheet -->
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.15.4/css/all.css" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.4.1/font/bootstrap-icons.css" rel="stylesheet">
+
+    <!-- Libraries Stylesheet -->
+    <link href="{% static 'lib/animate/animate.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/lightbox/css/lightbox.min.css' %}" rel="stylesheet">
+    <link href="{% static 'lib/owlcarousel/owl.carousel.min.css' %}" rel="stylesheet">
+
+    <!-- Customized Bootstrap Stylesheet -->
+    <link href="{% static 'css/bootstrap.min.css' %}" rel="stylesheet">
+
+    <!-- Template Stylesheet -->
+    <link href="{% static 'css/style.css' %}" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Spinner Start -->
+    <div id="spinner"
+        class="show w-100 vh-100 bg-white position-fixed translate-middle top-50 start-50  d-flex align-items-center justify-content-center">
+        <div class="spinner-grow text-primary" role="status"></div>
+    </div>
+    <!-- Spinner End -->
+
+
+    <!-- Navbar start -->
+     <div class="container-fluid nav-bar">
+            <div class="container">
+                <nav class="navbar navbar-light navbar-expand-lg py-4">
+                    <a href="{% url 'homepg' %}" class="navbar-brand">
+                        <h1 class="text-primary fw-bold mb-0">Savory<span class="text-dark">Seasons</span> </h1>
+                    </a>
+                    <button class="navbar-toggler py-2 px-3" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+                        <span class="fa fa-bars text-primary"></span>
+                    </button>
+                    <div class="collapse navbar-collapse" id="navbarCollapse">
+                        <div class="navbar-nav mx-auto">
+                            <a href="{% url 'homepg' %}" class="nav-item nav-link active">Home</a>
+                            <a href="{% url 'eventspg' %}" class="nav-item nav-link ">Events</a>
+                            <a href="{% url 'about' %}" class="nav-item nav-link">About</a>
+                            <a href="{% url 'contact' %}" class="nav-item nav-link">Contact</a>
+                            <a href="{% url 'product' %}" class="nav-item nav-link">Menu</a>
+                            <a href="{% url 'service' %}" class="nav-item nav-link">Services</a>
+                        </div>
+                        <button class="btn-search btn btn-primary btn-md-square me-4 rounded-circle d-none d-lg-inline-flex" data-bs-toggle="modal" data-bs-target="#searchModal"><i class="fas fa-search"></i></button>
+                       {% if request.session.Name %}
+                        <a href="#" class="nav-item nav-link">{{request.session.Name}}</a>
+                        <a href="{% url 'logoutuser' %}" class="nav-item nav-link">Logout</a>
+                        {% else %}
+
+                        <a href="{% url 'userlogin' %}" class="nav-item nav-link">Register/Login</a>
+                        {% endif %}
+                        <a href="{% url 'cartpg' %}" class="nav-item nav-link">Your Delicacies</a>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    <!-- Navbar End -->
+
+
+    <!-- Modal Search Start -->
+    <div class="modal fade" id="searchModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-fullscreen">
+                <div class="modal-content rounded-0">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">Search by keyword</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body d-flex align-items-center">
+                        <div class="input-group w-75 mx-auto d-flex">
+                           <form method="get" action="{% url 'dish_search' %}">
+                               {% csrf_token %}
+                               <input type="search" class="form-control bg-transparent p-3" placeholder="Delicacies" aria-describedby="search-icon-1" name="query">
+                               <button type="submit" class="input-group-text p-3" style="margin-left:600px; margin-top:-60px">Search</button>
+                           </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- Modal Search End -->
+
+
+    <!-- Hero Start -->
+
+    <!-- Hero End -->
+
+
+    <!-- 404 Start -->
+    <div class="container-fluid background">
+        <div class="row padding-top-20">
+            <div class="col-12 col-sm-12 col-md-10 col-lg-10 col-xl-8 offset-md-1 offset-lg-1 offset-xl-2 padding-horizontal-40">
+                <div class="row">
+                    <div class="col-12 main-wrapper">
+                        <div class="row">
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div id="template" class="row panel-wrapper">
+                                    <div class="col-12 panel-header basket-header">
+                                        <div class="row">
+                                            <div class="col-6 basket-title">
+                                                <span class="description">review your</span><br><span class="emphasized">Cart Summary</span>
+                                            </div>
+                                            <div class="col-6 order-number align-right">
+                                                <span class="description">order #</span><br><span class="emphasized">{{order_number}}</span>
+                                            </div>
+                                        </div>
+                                        <div class="row column-titles padding-top-10">
+                                           
+                                            <div class="col-5 align-center"><span>Name</span></div>
+                                            <div class="col-2 align-center"><span>Quantity</span></div>
+                                            <div class="col-3 align-right"><span>Price</span></div>
+                                        </div>                                    
+                                    </div>
+                                    <div class="col-12 panel-body basket-body">
+                                        
+                                        <div class="row product">
+                                            {% for i in data %}
+                                
+                                            <div class="col-5">{{i.Dishname}}<br><span class="additional">&nbsp;</span></div>
+                                            <div class="col-2 align-right"><span class="sub"></span> {{i.Quantity}}</div>
+                                            <div class="col-3 align-right"><span class="sub"></span> {{i.Price}}</div>
+                                            {% endfor %}
+                                        </div>
+                                        
+                                    </div>
+                                    <div class="col-12 panel-footer basket-footer">
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-8 align-right description"><div class="dive">Subtotal</div></div>
+                                            <div class="col-4 align-right"><span class="emphasized">{{totalprice}}</span></div>
+                                            <div class="col-8 align-right description"><div class="dive">Taxes</div></div>
+                                            <div class="col-4 align-right"><span class="emphasized">0.00</span></div>
+                                            <div class="col-8 align-right description"><div class="dive">Shipping</div></div>
+                                            <div class="col-4 align-right"><span class="emphasized">0.00</span></div>
+                                        </div>
+                                        <hr>
+                                        <div class="row">
+                                            <div class="col-8 align-right description"><div class="dive">Total</div></div>
+                                            <div class="col-4 align-right"><span class="very emphasized">{{totalprice}}</span></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-12 col-sm-12 col-md-6 col-lg-6 col-xl-6">
+                                <div class="row panel-wrapper">
+                                    <div class="col-12 panel-header creditcard-header">
+
+                                    </div>
+                                    <div class="col-12 panel-body creditcard-body">
+
+                                    </div>
+                                    <div class="col-12 panel-footer creditcard-footer">
+                                        <div class="row">
+                                            <div class="col-12 align-right">
+                                                <button class="cancel" type="submit" >Cancel</button>&nbsp;
+                                            </div>
+                                                <div style="margin-top: -44px; margin-left: 250px;">
+                                                    <form action="{% url 'confirmorder' %}">
+                                                    <button class="confirm">Confirm & Pay</button>
+                                                </form></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- 404 End -->
+
+
+    <!-- Footer Start -->
+    <div class="container-fluid footer py-6 my-6 mb-0 bg-light wow bounceInUp" data-wow-delay="0.1s">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h1 class="text-primary">Cater<span class="text-dark">Serv</span></h1>
+                        <p class="lh-lg mb-4">There cursus massa at urnaaculis estieSed aliquamellus vitae ultrs
+                            condmentum leo massamollis its estiegittis miristum.</p>
+                        <div class="footer-icon d-flex">
+                            <a class="btn btn-primary btn-sm-square me-2 rounded-circle" href=""><i
+                                    class="fab fa-facebook-f"></i></a>
+                            <a class="btn btn-primary btn-sm-square me-2 rounded-circle" href=""><i
+                                    class="fab fa-twitter"></i></a>
+                            <a href="#" class="btn btn-primary btn-sm-square me-2 rounded-circle"><i
+                                    class="fab fa-instagram"></i></a>
+                            <a href="#" class="btn btn-primary btn-sm-square rounded-circle"><i
+                                    class="fab fa-linkedin-in"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h4 class="mb-4">Special Facilities</h4>
+                        <div class="d-flex flex-column align-items-start">
+                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Cheese
+                                Burger</a>
+                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Sandwich</a>
+                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Panner
+                                Burger</a>
+                            <a class="text-body mb-3" href=""><i class="fa fa-check text-primary me-2"></i>Special
+                                Sweets</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h4 class="mb-4">Contact Us</h4>
+                        <div class="d-flex flex-column align-items-start">
+                            <p><i class="fa fa-map-marker-alt text-primary me-2"></i> 123 Street, New York, USA</p>
+                            <p><i class="fa fa-phone-alt text-primary me-2"></i> (+012) 3456 7890 123</p>
+                            <p><i class="fas fa-envelope text-primary me-2"></i> info@example.com</p>
+                            <p><i class="fa fa-clock text-primary me-2"></i> 26/7 Hours Service</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-lg-3 col-md-6">
+                    <div class="footer-item">
+                        <h4 class="mb-4">Social Gallery</h4>
+                        <div class="row g-2">
+                            <div class="col-4">
+                                <img src="img/menu-01.jpg" class="img-fluid rounded-circle border border-primary p-2"
+                                    alt="">
+                            </div>
+                            <div class="col-4">
+                                <img src="img/menu-02.jpg" class="img-fluid rounded-circle border border-primary p-2"
+                                    alt="">
+                            </div>
+                            <div class="col-4">
+                                <img src="img/menu-03.jpg" class="img-fluid rounded-circle border border-primary p-2"
+                                    alt="">
+                            </div>
+                            <div class="col-4">
+                                <img src="img/menu-04.jpg" class="img-fluid rounded-circle border border-primary p-2"
+                                    alt="">
+                            </div>
+                            <div class="col-4">
+                                <img src="img/menu-05.jpg" class="img-fluid rounded-circle border border-primary p-2"
+                                    alt="">
+                            </div>
+                            <div class="col-4">
+                                <img src="img/menu-06.jpg" class="img-fluid rounded-circle border border-primary p-2"
+                                    alt="">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Footer End -->
+
+
+    <!-- Copyright Start -->
+    <div class="container-fluid copyright bg-dark py-4">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                    <span class="text-light"><a href="#"><i class="fas fa-copyright text-light me-2"></i>Your Site
+                            Name</a>, All right reserved.</span>
+                </div>
+                <div class="col-md-6 my-auto text-center text-md-end text-white">
+                    <!--/*** This template is free as long as you keep the below author’s credit link/attribution link/backlink. ***/-->
+                    <!--/*** If you'd like to use the template without the below author’s credit link/attribution link/backlink, ***/-->
+                    <!--/*** you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". ***/-->
+                    Designed By <a class="border-bottom" href="https://htmlcodex.com">HTML Codex</a> Distributed By <a
+                        class="border-bottom" href="https://themewagon.com">ThemeWagon</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- Copyright End -->
+
+
+    <!-- Back to Top -->
+    <a href="#" class="btn btn-md-square btn-primary rounded-circle back-to-top"><i class="fa fa-arrow-up"></i></a>
+
+
+    <!-- JavaScript Libraries -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="{% static 'lib/wow/wow.min.js' %}"></script>
+    <script src="{% static 'lib/easing/easing.min.js' %}"></script>
+    <script src="{% static 'lib/waypoints/waypoints.min.js' %}"></script>
+    <script src="{% static 'lib/counterup/counterup.min.js' %}"></script>
+    <script src="{% static 'lib/lightbox/js/lightbox.min.js' %}"></script>
+    <script src="{% static 'lib/owlcarousel/owl.carousel.min.js' %}"></script>
+
+    <!-- Template Javascript -->
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+<script>
+    $( document ).ready ( function ()
+{
+    console.log ( 'ready!' );
+    $('[data-toggle="tooltip"]').tooltip();
+    var template = $( '#template' ).html ();
+    Mustache.parse ( template );
+    var rendered = Mustache.render ( template, get_basket () );
+    $( '#template' ).html ( rendered );
+    if ( $('.basket-body').hasScrollBar () )
+    {
+        $('.column-titles').addClass('fix-overflow');
+        $('.basket-body').niceScroll({autohidemode: false,cursorcolor:"#ffffff",cursorborder:"1px solid #D0D0D0",cursorborderradius: "0",background: "#ffffff"});
+    }
+    else
+    {
+        $('.column-titles').removeClass('fix-overflow');
+    }
+    
+    $('.card-expiration').datepicker({
+    format: "mm/yyyy",
+    startView: "months", 
+    minViewMode: "months"        
+});
+});
+
+function get_basket ()
+{
+    var products =
+    [ 
+        { name: "Product 1 lorem", additional: "Additional Informations", quantity: 1, unit: "pc", price: 10, thumbnail: "http://via.placeholder.com/200x200" }, 
+        { name: "Product 2 ipsum", additional: "Additional Informations", quantity: 1, unit: "kg", price: 20, thumbnail: "http://via.placeholder.com/640x480" }, 
+        { name: "Product 3 dolor sit amet", additional: "Additional Informations", quantity: 2, unit: "l", price: 30, thumbnail: "http://via.placeholder.com/1920x1080" },
+        { name: "Product 4 consectetur adipiscing elit", additional: "Additional Informations", quantity: 1, unit: "pcs", price: 25, thumbnail: "http://via.placeholder.com/800x400" },
+        { name: "Product 5 sed dapibus nibh", additional: "Additional Informations", quantity: 3, unit: "pcs", price: 9, thumbnail: "http://via.placeholder.com/400x800" },
+        { name: "Product 6 sit amet maximus ultrices", additional: "Additional Informations", quantity: 1, unit: "pcs", price: 13, thumbnail: "http://via.placeholder.com/2048x1024" },
+        { name: "Product 7 duis rutrum", additional: "Additional Informations", quantity: 5, unit: "pcs", price: 200, thumbnail: "http://via.placeholder.com/20x20" },
+        { name: "Product 8 efficitur lectus et facilisis", additional: "Additional Informations", quantity: 1, unit: "pc", price: 350, thumbnail: "http://via.placeholder.com/256x64" },
+        { name: "Product 9 nulla at ipsum nec risus vestibulum ullamcorper", additional: "Additional Informations", quantity: 10, unit: "pcs", price: 70, thumbnail: "http://via.placeholder.com/64x256" },
+        { name: "Product 10 proin facilisis magna", additional: "Additional Informations", quantity: 4, unit: "pcs", price: 1000, thumbnail: "http://via.placeholder.com/1024x768" },
+        { name: "Product 11 donec at arcu a tortor pellentesque cursus vel a quam", additional: "Additional Informations", quantity: 300, unit: "pcs", price: 6600, thumbnail: "http://via.placeholder.com/400x100" },
+        { name: "Product 12 nulla auctor libero in velit vulputate", additional: "Additional Informations", quantity: 6, unit: "pcs", price: 17.5, thumbnail: "http://via.placeholder.com/100x500" }
+    ]
+    return { "products": products, "order_number": "1-23-456789A", "subtotal": 13579, "taxes": 246, "shipping_cost": 810, "total": 16825, "currency": "&dollar;" };
+}
+
+//https://stackoverflow.com/questions/4814398/how-can-i-check-if-a-scrollbar-is-visible
+(function($) {
+    $.fn.hasScrollBar = function() {
+        return this.get(0).scrollHeight > this.height();
+    }
+})(jQuery);
+</script>
+<style>
+    html, body
+{
+    height: 100%;
+    color: black;
+    /* font-family: 'Barlow', sans-serif; */
+    /* font-family: 'Roboto Condensed', sans-serif; */
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+}
+
+body
+{
+    font-size: 62.5%;
+}
+
+body
+{
+    background:  url(https://i.postimg.cc/T1LbCGzY/hero.png) no-repeat center center fixed; 
+    background-size: cover;
+}
+
+.main-wrapper
+{
+    border-radius: 15px 15px 15px 15px;
+    -moz-border-radius: 15px 15px 15px 15px;
+    -webkit-border-radius: 15px 15px 15px 15px;
+    border: none;
+    -webkit-box-shadow: 0px 20px 10px 10px rgba(0,0,0,0.1);
+    -moz-box-shadow: 0px 20px 10px 10px rgba(0,0,0,0.1);
+    box-shadow: 0px 20px 10px 10px rgba(0,0,0,0.1);
+}
+
+.basket-header
+{
+    border-radius: 15px 0 0 0;
+    -moz-border-radius: 15px 0 0 0;
+    -webkit-border-radius: 15px 0 0 0;
+    padding-left: 25px !important;
+}
+
+.creditcard-header
+{
+    border-radius: 0 15px 0 0;
+    -moz-border-radius: 0 15px 0 0;
+    -webkit-border-radius: 0 15px 0 0;
+    padding-left: 35px !important;
+}
+
+
+
+.panel-header
+{
+    
+    background: #d4a762;
+    height: 80px;
+    padding: 15px 20px 0 20px;
+}
+
+.panel-wrapper .basket-header .column-titles
+{
+    color: #A2C6DD;
+    color: white;
+    padding: 0;
+    margin: 0;
+    /* font-family: 'Anton', sans-serif; */
+    display: none;
+    visibility: hidden;
+}
+
+.fix-overflow
+{
+    padding-right: 5px !important;
+}
+
+.panel-wrapper .basket-body
+{
+    overflow-x: hidden;
+    overflow-y: auto;
+}
+
+.panel-wrapper .creditcard-body
+{
+    padding: 30px 40px 0 40px;
+}
+
+.panel-wrapper .panel-body
+{
+    font-weight: 400;
+    font-size: 1.4em;
+    outline: none !important;
+    min-height: 350px;
+    max-height: 350px;
+}
+
+.basket-body
+{
+    background: #F9F9F9;
+}
+
+.creditcard-body
+{
+    background: white;
+}
+
+.basket-body .row.product
+{
+    margin: 5px 0 5px 0;
+    padding:  5px 0 5px 0;
+    border-bottom: solid 1px #eeeeee;
+}
+
+.basket-body .row.product div
+{
+    color: #777879;
+    padding: 0 10px 0 10px;
+}
+
+
+
+.product-image img
+{
+    -o-object-fit: contain;
+    object-fit: contain;
+    width: 100%;
+    min-width: 100%;
+    max-width: 100%;
+    max-height: 80px;
+}
+
+.card-wrapper
+{
+    height: 100%;
+}
+
+.padding-top-10
+{
+    padding-top: 10px !important;
+}
+
+.padding-top-20
+{
+    padding-top: 20px !important;
+}
+
+.padding-horizontal-40
+{
+    padding: 0 40px 0 40px;
+}
+
+.align-right
+{
+    text-align: right;
+}
+
+.align-center
+{
+    text-align: center;
+}
+
+.emphasized
+{
+    /* font-family: 'Anton', sans-serif; */
+    /* font-family: 'Roboto Condensed', sans-serif; */
+    /* font-family: 'Raleway', sans-serif; */
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    font-size: 1.6em;
+    color: white;
+}
+
+.description
+{
+    /* font-family: 'Anton', sans-serif; */
+    /* font-family: 'Roboto Condensed', sans-serif; */
+    /* font-family: 'Raleway', sans-serif; */
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 400;
+    font-size: 1.6em;
+    color: White;
+}
+
+.panel-footer
+{
+    padding-top: 10px;
+    height: 150px;
+}
+
+.basket-footer
+{
+    background: #d4a762;
+    border-radius: 0 0 0 15px;
+    -moz-border-radius: 0 0 0 15px;
+    -webkit-border-radius: 0 0 0 15px;
+}
+
+
+
+
+.creditcard-footer
+{
+    background: white;
+    border-radius: 0 0 15px 0;
+    -moz-border-radius: 0 0 15px 0;
+    -webkit-border-radius: 0 0 15px 0;
+    padding: 75px 30px 0 30px;
+}
+
+
+.panel-footer hr
+{
+    margin: 3px 0 3px 0;
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid hsl(36, 57%, 61%);
+    padding: 0;
+}
+
+.panel-footer button
+{
+    border: solid 1px #d4a762;
+    background: #d4a762;
+    font-family: 'Open Sans', sans-serif;
+    font-weight: 600;
+    color: white;
+    font-size: 1.3em;
+    text-transform: uppercase;
+    padding: 10px 15px 11px 15px;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+.panel-footer button:hover
+{
+    cursor: pointer;
+}
+
+button.cancel
+{
+    background: white;
+    color: #166D9A;
+}
+
+button.cancel:hover
+{
+    background: #ff0000;
+    border-color: #ff0000;
+    color: white;
+}
+
+button.confirm:hover
+{
+    background: #00b300;
+    border-color: #00b300;
+    color: white;
+}
+
+.dive
+{
+    margin-top: 5px;
+}
+
+.sub
+{
+    font-size: 75%;
+    color: #aaaaaa;
+}
+
+.very
+{
+    font-size: 2.2em;
+}
+
+.creditcard-body form
+{
+    font-size: 1.3em;
+}
+ 
+.creditcard-body form i.fa
+{
+    margin-right: 10px;
+    color: #166D9A;
+}
+
+.creditcard-body form fieldset
+{
+    border-bottom: dotted 2px #D0D0D0;
+    margin-bottom: 25px;
+}
+
+.creditcard-body form input
+{
+    border: none;
+    font-weight: 600;
+    color: #555555;
+    width: 85%;
+    outline: none;
+}
+
+.creditcard-body form input::placeholder
+{
+    color: #D0D0D0;
+}
+
+.creditcard-body form label
+{
+    color:  #aaaaaa;
+}
+
+.additional
+{
+    font-weight: 300;
+    font-size: 80%;
+}
+
+.fa-info-circle
+{
+    color: #aaaaaa !important;
+}
+
+span.month.focused.active
+{
+    background: #166D9A !important;
+    background-image: none !important;
+}
+
+
+@media (max-width: 992px)
+{
+}
+
+@media (max-width: 767px)
+{
+    
+    .basket-header
+    {
+        border-radius: 15px 15px 0 0;
+        -moz-border-radius: 15px 15px 0 0;
+        -webkit-border-radius: 15px 15px 0 0;
+    }
+    
+    .basket-footer
+    {
+        background: #166D9A;
+        border-radius: 0;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+    }    
+    
+    .creditcard-header
+    {
+        border-radius: 0;
+        -moz-border-radius: 0;
+        -webkit-border-radius: 0;
+    }
+    
+    .creditcard-footer
+    {
+        border-radius: 0 0 15px 15px;
+        -moz-border-radius: 0 0 15px 15px;
+        -webkit-border-radius: 0 0 15px 15px;
+    }
+}
+</style>
+<script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.7.1.min.js"></script>
+{% if messages %}
+{% for i in messages %}
+    {% if i.tags == 'warning' %}
+<script>
+    swal('{{i}}','','warning');
+</script>
+        {% elif i.tags == 'error' %}
+<script>
+    swal('{{i}}','','error')
+</script>
+        {% elif i.tags == 'success' %}
+<script>
+    swal('{{i}}','','success')
+</script>
+    {% else %}
+<script>
+    swal('{{i}}','','info')
+</script>
+{% endif %}
+{% endfor %}
+{% endif %}
+</html>

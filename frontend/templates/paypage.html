@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+    <!-- Add meta tags for mobile and IE -->
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title> PayPal Checkout Integration | Server Demo </title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+<style>
+        body {
+            font-family: 'Arial', sans-serif;
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            background-color: #f4f4f4;
+        }
+
+        .courses_details_banner {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .course_card {
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+        }
+
+        .course_text {
+            padding: 20px;
+        }
+
+        h3 {
+            color: #333;
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .prise {
+            margin-top: 15px;
+        }
+
+        .inactive {
+            text-decoration: line-through;
+            color: #999;
+        }
+
+        .active {
+            color: #e44d26;
+            font-weight: bold;
+        }
+
+        .hours {
+            margin-top: 15px;
+        }
+
+        .video {
+            display: flex;
+            justify-content: space-between;
+            font-size: 14px;
+            color: #666;
+        }
+
+        .single_video {
+            display: flex;
+            align-items: center;
+        }
+
+        .single_video i {
+            margin-right: 5px;
+            color: #e44d26;
+        }
+    #video-container {
+        pointer-events: none;  /* Disable click and hover events */
+        opacity: 0.5;         /* Adjust opacity to make it visually less prominent */
+    }
+
+    #video-container video {
+        pointer-events: none;  /* Disable click and hover events on the video itself */
+    }
+    #paypal-container {
+            margin-left:500px;
+        }
+    </style>
+</head>
+<body>
+<div style="text-align:center"><h4>Course details</h4><br></div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="table-responsive pt-3">
+                <table class="table table-striped project-orders-table">
+                    <thead>
+                        <tr>
+                            <th>Delicacies Name</th>
+                            <th>Price</th>
+                            <th>Quantity</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for i in data %}
+                        <tr>
+                            <td>{{i.Dishname}}</td>
+                            <td>{{i.Price}}</td>
+                            <td>{{i.Quantity}}</td>
+                        </tr>
+                        {% endfor %}
+                        <tr>
+                            <td colspan="1" class="text-right font-weight-bold">Total  :  {{totalprice}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+
+    <div id="paypal-container">
+    <!-- Set up a container element for the button -->
+    <div id="paypal-button-container"></div>
+        </div>
+
+    <!-- Include the PayPal JavaScript SDK -->
+    <script src="https://www.paypal.com/sdk/js?client-id=Ac7efVd6-VLL3QdUfM0gC3GJ5F_I0bwnXEdlL4bBfwA2MYDK670GE1CDmKsNENN8j20E0vHCjPSDIX-S&currency=USD"></script>
+
+   <script>
+    var total = '{{totalprice}}';
+
+
+    paypal.Buttons({
+        // Set up transaction
+        createOrder: function(data, actions) {
+            return actions.order.create({
+                purchase_units: [{
+                    amount: {
+                        value: total
+                    }
+                }]
+            });
+        },
+
+        // Finalize transactions
+        onApprove: function(data, actions) {
+            return actions.order.capture().then(function(details) {
+                // Show a success message to the buyer
+                alert('Transaction completed by ' + details.payer.name.given_name + '!');
+
+                // Redirect to the /finished endpoint after successful payment
+                window.location.href = '/endpage/'
+
+            });
+        }
+    }).render('#paypal-button-container');
+</script>
+
+</body>
+
+</html>

@@ -1,0 +1,302 @@
+
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
+  <meta name="description" content=""/>
+  <meta name="author" content=""/>
+  <title>Delivery</title>
+  <!-- loader-->
+  <link href="{% static 'assets/css/pace.min.css' %}" rel="stylesheet"/>
+  <script src="{% static 'assets/js/pace.min.js' %}"></script>
+  <!--favicon-->
+  <link rel="icon" href="{% static 'assets/images/favicon.ico' %}" type="image/x-icon">
+  <!-- Vector CSS -->
+  <link href="{% static 'assets/plugins/vectormap/jquery-jvectormap-2.0.2.css' %}" rel="stylesheet"/>
+  <!-- simplebar CSS-->
+  <link href="{% static 'assets/plugins/simplebar/css/simplebar.css' %}" rel="stylesheet"/>
+  <!-- Bootstrap core CSS-->
+  <link href="{% static 'assets/css/bootstrap.min.css' %}" rel="stylesheet"/>
+  <!-- animate CSS-->
+  <link href="{% static 'assets/css/animate.css' %}" rel="stylesheet" type="text/css"/>
+  <!-- Icons CSS-->
+  <link href="{% static 'assets/css/icons.css' %}" rel="stylesheet" type="text/css"/>
+  <!-- Sidebar CSS-->
+  <link href="{% static 'assets/css/sidebar-menu.css' %}" rel="stylesheet"/>
+  <!-- Custom Style-->
+  <link href="{% static 'assets/css/app-style.css' %}" rel="stylesheet"/>
+
+</head>
+
+<body class="bg-theme bg-theme2">
+
+<!-- Start wrapper-->
+ <div id="wrapper">
+
+  <!--Start sidebar-wrapper-->
+   <div id="sidebar-wrapper" data-simplebar="" data-simplebar-auto-hide="true">
+     <div class="brand-logo">
+      <a href="{% url 'indexpage' %}">
+       <img src="{% static 'assets/images/logo-icon.png' %}" class="logo-icon" alt="logo icon">
+       <h5 class="logo-text">Doorstep Project</h5>
+     </a>
+   </div>
+   <ul class="sidebar-menu do-nicescrol">
+                 <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-document-text menu-icon"></i>
+              <span class="menu-title">Add category</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{% url 'category' %}">New Category</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'catdisplay' %}">Display</a></li>
+              </ul>
+            </div>
+          </li>
+  <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic2" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-document-text menu-icon"></i>
+              <span class="menu-title">Add Products</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic2">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{% url 'dish' %}">New Products</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'prodisplay' %}">Display</a></li>
+              </ul>
+            </div>
+          </li>
+
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic3" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-document-text menu-icon"></i>
+              <span class="menu-title">Enquries</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic3">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{% url 'displaycontact' %}">Enquries</a></li>
+              </ul>
+            </div>
+          </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic4" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-document-text menu-icon"></i>
+              <span class="menu-title">Add Events Images</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic4">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{% url 'addeventpg' %}">Event Images</a></li>
+                <li class="nav-item"> <a class="nav-link" href="{% url 'displayevent' %}">Display</a></li>
+              </ul>
+            </div>
+          </li>
+        <li class="nav-item">
+            <a class="nav-link" data-toggle="collapse" href="#ui-basic5" aria-expanded="false" aria-controls="ui-basic">
+              <i class="typcn typcn-document-text menu-icon"></i>
+              <span class="menu-title">Events</span>
+              <i class="menu-arrow"></i>
+            </a>
+            <div class="collapse" id="ui-basic5">
+              <ul class="nav flex-column sub-menu">
+                <li class="nav-item"> <a class="nav-link" href="{% url 'displaybookingpg' %}">Booking Details</a></li>
+              </ul>
+            </div>
+          </li>
+    </ul>
+
+   </div>
+   <!--End sidebar-wrapper-->
+
+<!--Start topbar header-->
+<header class="topbar-nav">
+ <nav class="navbar navbar-expand fixed-top">
+  <ul class="navbar-nav mr-auto align-items-center">
+    <li class="nav-item">
+      <a class="nav-link toggle-menu" href="javascript:void();">
+       <i class="icon-menu menu-icon"></i>
+     </a>
+    </li>
+    <li class="nav-item">
+      <form class="search-bar">
+        <input type="text" class="form-control" placeholder="Enter keywords">
+         <a href="{% static 'javascript:void();' %}"><i class="icon-magnifier"></i></a>
+      </form>
+    </li>
+  </ul>
+
+  <ul class="navbar-nav align-items-center right-nav-link">
+    <li class="nav-item">
+      <a class="nav-link dropdown-toggle dropdown-toggle-nocaret" data-toggle="dropdown" href="#">
+        <span class="user-profile"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+  <path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0"/>
+  <path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8m8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1"/>
+</svg></span>
+      </a>
+      <ul class="dropdown-menu dropdown-menu-right">
+       <li class="dropdown-item user-details">
+        <a href="#">
+           <div class="media">
+             <div class="avatar"><img class="align-self-start mr-3" src="https://via.placeholder.com/110x110" alt="user avatar"></div>
+            <div class="media-body">
+                {% if request.session.username %}
+            <h6 class="mt-2 user-title">{{request.session.username}}</h6>
+                <form action="{% url 'logoutpage' %}">
+            <li class="dropdown-item"><button type="submit" class="btn btn-primary mr-2">logout</button></li>
+       </form>
+                {% else %}
+                <a href="{% url 'loginpage' %}">Login </a>
+            </div>
+               {% endif %}
+           </div>
+          </a>
+        </li>
+
+
+      </ul>
+    </li>
+  </ul>
+</nav>
+</header>
+<!--End topbar header-->
+
+<div class="clearfix"></div>
+
+  <div class="content-wrapper">
+    <div class="container-fluid">
+        {% block content %}
+
+
+	<!--start overlay-->
+<div class="overlay toggle-menu"></div>
+         <div class="welcome-content">
+                {% if request.session.username %}
+                    <h2>Welcome, {{ request.session.username }}!</h2>
+                    <p>Thank you for using our Doorstep Project Dashboard. Explore the features and manage your content seamlessly.</p>
+                {% else %}
+                    <h2>Welcome to Doorstep Project Dashboard!</h2>
+                    <p>Please <a href="{% url 'loginpage' %}">login</a> to access the dashboard features.</p>
+                {% endif %}
+            </div>
+
+
+
+		<!--end overlay-->
+    </div>
+    <!-- End container-fluid-->
+
+    </div><!--End content-wrapper-->
+   <!--Start Back To Top Button-->
+    <a href="{% static 'javaScript:void();' %}" class="back-to-top"><i class="fa fa-angle-double-up"></i> </a>
+    <!--End Back To Top Button-->
+	<!--Start footer-->
+	<footer class="footer">
+{% endblock %}
+      <div class="container">
+        <div class="text-center">
+          Copyright © 2023 Rithin
+        </div>
+      </div>
+    </footer>
+	<!--End footer-->
+
+  <!--start color switcher-->
+   <div class="right-sidebar">
+    <div class="switcher-icon">
+      <i class="zmdi zmdi-settings zmdi-hc-spin"></i>
+    </div>
+    <div class="right-sidebar-content">
+
+      <p class="mb-0">Gaussion Texture</p>
+      <hr>
+
+      <ul class="switcher">
+        <li id="theme1"></li>
+        <li id="theme2"></li>
+        <li id="theme3"></li>
+        <li id="theme4"></li>
+        <li id="theme5"></li>
+        <li id="theme6"></li>
+      </ul>
+
+      <p class="mb-0">Gradient Background</p>
+      <hr>
+
+      <ul class="switcher">
+        <li id="theme7"></li>
+        <li id="theme8"></li>
+        <li id="theme9"></li>
+        <li id="theme10"></li>
+        <li id="theme11"></li>
+        <li id="theme12"></li>
+		<li id="theme13"></li>
+        <li id="theme14"></li>
+        <li id="theme15"></li>
+      </ul>
+
+     </div>
+   </div>
+  <!--end color switcher-->
+
+  </div><!--End wrapper-->
+
+  <!-- Bootstrap core JavaScript-->
+  <script src="{% static 'assets/js/jquery.min.js' %}"></script>
+  <script src="{% static 'assets/js/popper.min.js' %}"></script>
+  <script src="{% static 'assets/js/bootstrap.min.js' %}"></script>
+
+ <!-- simplebar js -->
+  <script src="{% static 'assets/plugins/simplebar/js/simplebar.js' %}"></script>
+  <!-- sidebar-menu js -->
+  <script src="{% static 'assets/js/sidebar-menu.js' %}"></script>
+  <!-- loader scripts -->
+  <script src="{% static 'assets/js/jquery.loading-indicator.js' %}"></script>
+  <!-- Custom scripts -->
+  <script src="{% static 'assets/js/app-script.js' %}"></script>
+  <!-- Chart js -->
+
+  <script src="{% static 'assets/plugins/Chart.js/Chart.min.js' %}"></script>
+
+  <!-- Index js -->
+  <script src="{% static 'assets/js/index.js' %}"></script>
+
+
+</body>
+<style>
+    .welcome-content {
+        text-align: center;
+        padding: 30px;
+        background-color: #f8f9fa; /* Add a background color */
+        border-radius: 10px; /* Add rounded corners */
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Add a subtle box shadow */
+    }
+
+    .welcome-content h2 {
+        color: #007bff; /* Set the heading color */
+        font-size: 28px; /* Adjust the heading font size */
+        margin-bottom: 15px; /* Add some space below the heading */
+    }
+
+    .welcome-content p {
+        font-size: 16px; /* Adjust the paragraph font size */
+        color: #495057; /* Set the paragraph color */
+        margin-bottom: 20px; /* Add some space below the paragraph */
+    }
+
+    .welcome-content a {
+        color: #007bff; /* Set the link color */
+        text-decoration: underline; /* Add an underline to the link */
+    }
+
+    .welcome-content a:hover {
+        color: #0056b3; /* Change link color on hover */
+    }
+</style>
+
+</html>
